@@ -15,7 +15,7 @@ public class Main {
         us.saveUser("Celin", "Dion", (byte) 31);
         us.saveUser("Djoui", "Elington", (byte) 21);
 
-        us.removeUserById(2);
+        us.removeUserById(4);
         System.out.println(us.getAllUsers());
         us.cleanUsersTable();
         us.dropUsersTable();

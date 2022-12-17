@@ -16,47 +16,42 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void createUsersTable() {
-        String create = "create table if not exists userX (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(30), lastName VARCHAR(30), age INT)";
         try (Connection connection = Util.getConnection(); Statement statement = connection.createStatement()) {
-            statement.executeUpdate(create);
+            statement.executeUpdate("create table if not exists userX (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(30), lastName VARCHAR(30), age INT)");
         } catch (SQLException e) {
             e.printStackTrace();
-        };
+        }
     }
 
     public void dropUsersTable() {
-        String drop = "DROP TABLE IF EXISTS UserX";
         try (Connection connection = Util.getConnection(); Statement statement = connection.createStatement()) {
-            statement.executeUpdate(drop);
+            statement.executeUpdate("DROP TABLE IF EXISTS UserX");
         } catch (SQLException e) {
             e.printStackTrace();
-        };
+        }
     }
 
     public void saveUser(String name, String lastName, byte age) {
-        String save = String.format("insert into UserX (name, lastName, age) values ('%s', '%s', '%s')", name, lastName, age);
         try (Connection connection = Util.getConnection(); Statement statement = connection.createStatement()) {
-            statement.executeUpdate(save);
+            statement.executeUpdate(String.format("insert into UserX (name, lastName, age) values ('%s', '%s', '%s')", name, lastName, age));
         } catch (SQLException e) {
             e.printStackTrace();
-        };
+        }
     }
 
     public void removeUserById(long id) {
-        String remove = String.format("delete from UserX where id = %s", id);
         try (Connection connection = Util.getConnection(); Statement statement = connection.createStatement()) {
-            statement.executeUpdate(remove);
+            statement.executeUpdate(String.format("delete from UserX where id = %s", id));
         } catch (SQLException e) {
             e.printStackTrace();
-        };
+        }
     }
 
     public List<User> getAllUsers() {
         List<User> allUsers = new ArrayList<>();
-        String get = "select * from UserX";
 
         try (Connection connection = Util.getConnection(); Statement statement = connection.createStatement()) {
-            ResultSet rset = statement.executeQuery(get);
+            ResultSet rset = statement.executeQuery("select * from UserX");
             while (rset.next()) {
                 User user = new User();
                 user.setId(rset.getLong("id"));
@@ -67,16 +62,15 @@ public class UserDaoJDBCImpl implements UserDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        };
+        }
         return allUsers;
     }
 
     public void cleanUsersTable() {
-        String delete = "delete from UserX";
         try (Connection connection = Util.getConnection(); Statement statement = connection.createStatement()) {
-            statement.executeUpdate(delete);
+            statement.executeUpdate("delete from UserX");
         } catch (SQLException e) {
             e.printStackTrace();
-        };
+        }
     }
 }
